@@ -15,7 +15,7 @@ import com.palak.payloads.CommentDto;
 import com.palak.services.CommentService;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 public class CommentController {
 
 	@Autowired
