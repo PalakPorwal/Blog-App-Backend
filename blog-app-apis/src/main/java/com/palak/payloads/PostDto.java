@@ -2,10 +2,6 @@ package com.palak.payloads;
 
 import java.util.*;
 
-import com.palak.entities.Category;
-import com.palak.entities.User;
-import com.palak.entities.Comment;
-
 import lombok.*;
 
 @Getter
