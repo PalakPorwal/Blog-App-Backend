@@ -17,6 +17,7 @@ C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\pal
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\services\impl\PostServiceImpl.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\services\CategoryService.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\controllers\CategoryController.java
+C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\exceptions\AlreadyExistsException.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\controllers\CommentController.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\services\impl\UserServiceImpl.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\services\CommentService.java

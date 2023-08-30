@@ -12,6 +12,7 @@ com\palak\services\impl\PostServiceImpl.class
 com\palak\payloads\CategoryDto.class
 com\palak\payloads\PostDto.class
 com\palak\services\UserService.class
+com\palak\exceptions\AlreadyExistsException.class
 com\palak\services\impl\FileServiceImpl.class
 com\palak\BlogAppApisApplication.class
 com\palak\services\CategoryService.class
