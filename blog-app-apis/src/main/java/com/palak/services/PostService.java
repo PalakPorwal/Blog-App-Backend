@@ -2,7 +2,6 @@ package com.palak.services;
 
 import java.util.List;
 
-import com.palak.entities.Post;
 import com.palak.payloads.PostDto;
 import com.palak.payloads.PostResponse;
 
