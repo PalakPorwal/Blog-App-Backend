@@ -10,11 +10,13 @@ com\palak\entities\Category.class
 com\palak\exceptions\GlobalExceptionHandler.class
 com\palak\services\impl\PostServiceImpl.class
 com\palak\payloads\CategoryDto.class
+com\palak\config\SecurityConfig.class
 com\palak\payloads\PostDto.class
 com\palak\services\UserService.class
 com\palak\exceptions\AlreadyExistsException.class
 com\palak\services\impl\FileServiceImpl.class
 com\palak\BlogAppApisApplication.class
+com\palak\payloads\LoginUser.class
 com\palak\services\CategoryService.class
 com\palak\payloads\ApiResponse.class
 com\palak\repositories\CommentRepo.class

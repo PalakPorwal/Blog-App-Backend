@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.palak.payloads.ApiResponse;
+import com.palak.payloads.LoginUser;
 import com.palak.payloads.UserDto;
 import com.palak.services.UserService;
 
@@ -26,6 +27,13 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	// POST - Login User
+	@PostMapping("/login")
+	public ResponseEntity<UserDto> loginUserHandler(@RequestBody LoginUser user) {
+		UserDto existUser = this.userService.loginUser(user);
+		return new ResponseEntity<>(existUser, HttpStatus.OK);
+	}
 
 	// POST - CREATE USER
 	@PostMapping("/")

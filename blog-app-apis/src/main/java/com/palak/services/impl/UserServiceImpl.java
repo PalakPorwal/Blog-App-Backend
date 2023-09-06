@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.palak.entities.User;
+import com.palak.payloads.LoginUser;
 import com.palak.payloads.UserDto;
 import com.palak.repositories.*;
 import com.palak.services.UserService;
@@ -99,5 +100,15 @@ public class UserServiceImpl implements UserService {
 		// userDto.setAbout(user.getAbout());
 		// userDto.setPassword(user.getPassword());
 		return userDto;
+	}
+
+	@Override
+	public UserDto loginUser(LoginUser user) {
+
+		User existUser = this.userRepo.findAll().stream().filter((u) -> u.getEmail().equals(user.getEmail()) &&
+				u.getPassword().equals(user.getPassword())).findAny()
+				.orElseThrow(() -> new AlreadyExistsException("User Details not found"));
+
+		return this.userToDto(existUser);
 	}
 }

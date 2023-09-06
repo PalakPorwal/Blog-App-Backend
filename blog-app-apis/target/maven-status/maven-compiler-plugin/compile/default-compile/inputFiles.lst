@@ -25,9 +25,11 @@ C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\pal
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\entities\Category.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\entities\Post.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\services\impl\CommentServiceImpl.java
+C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\payloads\LoginUser.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\exceptions\GlobalExceptionHandler.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\BlogAppApisApplication.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\repositories\CommentRepo.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\payloads\CategoryDto.java
+C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\config\SecurityConfig.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\entities\User.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\repositories\CategoryRepo.java

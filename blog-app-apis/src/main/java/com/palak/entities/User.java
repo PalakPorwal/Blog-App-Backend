@@ -15,23 +15,29 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @NoArgsConstructor
 @Getter
 @Setter
 public class User {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name="user_name",nullable=false,length=100)
+
+	@Column(name = "user_name", nullable = false, length = 100)
 	private String name;
+
+	@Column(name = "user_email", nullable = false, length = 50)
 	private String email;
+
+	@Column(name = "user_password", nullable = false, length = 30)
 	private String password;
+
+	@Column(name = "user_about", nullable = false, length = 500)
 	private String about;
-	
-	@OneToMany(mappedBy="user",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	private List<Post> posts=new ArrayList<>();
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Post> posts = new ArrayList<>();
 
 }
