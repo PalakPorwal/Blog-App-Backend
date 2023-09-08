@@ -10,10 +10,13 @@ com\palak\entities\Category.class
 com\palak\exceptions\GlobalExceptionHandler.class
 com\palak\services\impl\PostServiceImpl.class
 com\palak\payloads\CategoryDto.class
+com\palak\config\SecurityConfig.class
 com\palak\payloads\PostDto.class
 com\palak\services\UserService.class
+com\palak\exceptions\AlreadyExistsException.class
 com\palak\services\impl\FileServiceImpl.class
 com\palak\BlogAppApisApplication.class
+com\palak\payloads\LoginUser.class
 com\palak\services\CategoryService.class
 com\palak\payloads\ApiResponse.class
 com\palak\repositories\CommentRepo.class
@@ -21,6 +24,7 @@ com\palak\repositories\PostRepo.class
 com\palak\exceptions\ResourceNotFoundException.class
 com\palak\payloads\CommentDto.class
 com\palak\services\CommentService.class
+com\palak\entities\Role.class
 com\palak\repositories\UserRepo.class
 com\palak\services\impl\UserServiceImpl.class
 com\palak\controllers\UserController.class
@@ -29,4 +33,5 @@ com\palak\services\PostService.class
 com\palak\repositories\CategoryRepo.class
 com\palak\payloads\PostResponse.class
 com\palak\controllers\CommentController.class
+com\palak\security\CustomUserDetailsService.class
 com\palak\controllers\CategoryController.class

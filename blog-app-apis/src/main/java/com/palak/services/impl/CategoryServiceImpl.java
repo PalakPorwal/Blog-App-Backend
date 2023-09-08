@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.palak.entities.Category;
+import com.palak.exceptions.AlreadyExistsException;
 import com.palak.exceptions.ResourceNotFoundException;
 import com.palak.payloads.CategoryDto;
 import com.palak.repositories.CategoryRepo;
@@ -23,9 +24,17 @@ public class CategoryServiceImpl implements CategoryService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public CategoryDto createCategory(CategoryDto categoryDto) {
+	public CategoryDto createCategory(CategoryDto catDto) {
+		// Check for existing category
+		boolean exist = this.categoryRepo.findAll().stream()
+				.filter((cat) -> cat.getCategoryTitle().equalsIgnoreCase(catDto.getCategoryTitle())
+						&& cat.getCategoryDescription().equalsIgnoreCase(catDto.getCategoryDescription()))
+				.findAny().isPresent();
+		if (exist)
+			throw new AlreadyExistsException("Category already exists...");
 
-		Category cat = this.modelMapper.map(categoryDto, Category.class);
+		// Saving
+		Category cat = this.modelMapper.map(catDto, Category.class);
 		Category addedCat = this.categoryRepo.save(cat);
 		return this.modelMapper.map(addedCat, CategoryDto.class);
 	}
@@ -66,8 +75,9 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<CategoryDto> getCategories() {
 
 		List<Category> categories = this.categoryRepo.findAll();
-		List<CategoryDto> catDtos=categories.stream().map((cat) -> this.modelMapper.map(cat, CategoryDto.class)).collect(Collectors.toList());
-		
+		List<CategoryDto> catDtos = categories.stream().map((cat) -> this.modelMapper.map(cat, CategoryDto.class))
+				.collect(Collectors.toList());
+
 		return catDtos;
 	}
 
