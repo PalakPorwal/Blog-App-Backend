@@ -1,16 +1,16 @@
 package com.palak.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import com.palak.entities.User;
 import com.palak.exceptions.ResourceNotFoundException;
 import com.palak.repositories.UserRepo;
 
-@Configuration
+@Component
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
@@ -23,10 +23,5 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return user;
     }
-
-    // @Bean
-    // CustomUserDetailsService customUserDetailsService() {
-    //     return new CustomUserDetailsService();
-    // }
 
 }
