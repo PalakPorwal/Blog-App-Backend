@@ -1,4 +1,5 @@
 package com.palak.entities;
+
 import java.util.Date;
 
 import jakarta.persistence.CascadeType;
@@ -14,34 +15,35 @@ import jakarta.persistence.Table;
 import lombok.*;
 import java.util.*;
 
-@Entity
-@Table(name="post")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "post")
 public class Post {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer postId;
-	
-	@Column(name="post_title",length=100,nullable=false)
+
+	@Column(name = "post_title", length = 100, nullable = false)
 	private String title;
-	
-	@Column(length=10000)
+
+	@Column(length = 10000)
 	private String content;
-	
+
 	private String imageName;
-	
+
 	private Date addedDate;
-	
+
 	@ManyToOne
-	@JoinColumn(name="category_id")
+	@JoinColumn(name = "category_id")
 	private Category category;
-	
+
 	@ManyToOne
 	private User user;
-	
-	@OneToMany(mappedBy="post", cascade=CascadeType.ALL)
-	private Set<Comment> comments=new HashSet<>();
+
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+	private Set<Comment> comments = new HashSet<>();
 }

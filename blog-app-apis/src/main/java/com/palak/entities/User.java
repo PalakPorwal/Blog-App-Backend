@@ -18,6 +18,7 @@ import lombok.*;
 @Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Getter
 @Setter
 public class User implements UserDetails {
@@ -38,7 +39,7 @@ public class User implements UserDetails {
 	@Column(name = "user_about", nullable = false, length = 500)
 	private String about;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Post> posts = new ArrayList<>();
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

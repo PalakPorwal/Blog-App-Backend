@@ -2,6 +2,7 @@ com\palak\controllers\PostController.class
 com\palak\entities\Post.class
 com\palak\services\FileService.class
 com\palak\services\impl\CategoryServiceImpl.class
+com\palak\config\SecurityConfig$1.class
 com\palak\entities\User.class
 com\palak\services\impl\CommentServiceImpl.class
 com\palak\config\AppConstants.class

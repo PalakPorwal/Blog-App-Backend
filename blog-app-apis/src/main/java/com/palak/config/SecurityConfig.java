@@ -1,11 +1,11 @@
 package com.palak.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,9 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.palak.security.JwtAuthenticationEntryPoint;
 import com.palak.security.JwtAuthenticationFilter;
@@ -24,6 +23,8 @@ import com.palak.security.JwtAuthenticationFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    private static final String[] PUBLIC_URLS = { "/api/users/", "/api/categories/", "/api/posts/" };
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -35,9 +36,12 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // Http Security object
         http
+                .cors(Customizer.withDefaults())
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers(HttpMethod.POST, "/auth/login")
+                        .requestMatchers(HttpMethod.POST, "/auth/login", "/api/users/")
+                        .permitAll()
+                        .requestMatchers(HttpMethod.GET, PUBLIC_URLS)
                         .permitAll()
                         .anyRequest()
                         .authenticated())
@@ -60,32 +64,19 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // @Bean
-    // public FilterRegistrationBean corsFilter() {
-
-    // UrlBasedCorsConfigurationSource source = new
-    // UrlBasedCorsConfigurationSource();
-
-    // CorsConfiguration corsConfig = new CorsConfiguration();
-    // corsConfig.setAllowCredentials(true);
-    // corsConfig.addAllowedOriginPattern("http://localhost:3000");
-
-    // corsConfig.addAllowedHeader("Authorization");
-    // corsConfig.addAllowedHeader("Content-Type");
-    // corsConfig.addAllowedHeader("Accept");
-
-    // corsConfig.addAllowedMethod("POST");
-    // corsConfig.addAllowedMethod("GET");
-    // corsConfig.addAllowedMethod("PUT");
-    // corsConfig.addAllowedMethod("DELETE");
-    // corsConfig.addAllowedMethod("OPTIONS");
-
-    // corsConfig.setMaxAge(3600L);
-
-    // source.registerCorsConfiguration("/**", corsConfig);
-
-    // FilterRegistrationBean bean = new FilterRegistrationBean<>(new
-    // CorsFilter(source));
-    // return bean;
-    // }
+    @Bean
+    WebMvcConfigurer configure() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000")
+                        // .allowedHeaders("Authorization", "Content-Type", "Accept")
+                        .allowedHeaders("*")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowCredentials(true)
+                        .maxAge(3600L);
+            }
+        };
+    }
 }
