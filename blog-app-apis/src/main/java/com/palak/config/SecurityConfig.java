@@ -24,7 +24,8 @@ import com.palak.security.JwtAuthenticationFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private static final String[] PUBLIC_URLS = { "/api/users/", "/api/categories/", "/api/posts/" };
+    private static final String[] PUBLIC_URLS = { "/api/users/", "/api/categories/",
+            "/api/posts", "/api/posts/**", "/api/post/image/**" };
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;

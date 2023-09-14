@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class PostResponse {
 
-	private List<PostDto> content;	
+	private List<PostDto> content;
 	private int pageNumber;
 	private int pageSize;
 	private long totalElements;
