@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.palak.entities.User;
+import com.palak.exceptions.ApiException;
 import com.palak.payloads.UserDto;
 import com.palak.security.JwtAuthRequest;
 import com.palak.security.JwtAuthResponse;
 import com.palak.security.JwtTokenHelper;
+import com.palak.services.UserService;
 
 @RestController
 @RequestMapping("/auth")
@@ -30,6 +32,9 @@ public class AuthController {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -59,10 +64,20 @@ public class AuthController {
             authenticationManager.authenticate(authentication);
 
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException(" Invalid Username or Password  !!");
+            throw new ApiException(" Invalid Username or Password  !!");
         }
 
     }
+
+//register new user api
+@PostMapping("/register")
+public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto)
+{
+    UserDto registeredUser=this.userService.registerNewUser(userDto);
+   
+    return new ResponseEntity<UserDto>(registeredUser,HttpStatus.CREATED);
+    
+}
 
     @ExceptionHandler(BadCredentialsException.class)
     public String exceptionHandler() {

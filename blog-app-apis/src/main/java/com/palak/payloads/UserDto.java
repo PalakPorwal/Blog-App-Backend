@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import java.util.*;
 
 @NoArgsConstructor
 @Getter
@@ -30,6 +31,9 @@ public class UserDto {
 	@NotEmpty
 	@Size(min = 3, message = "About must be more than 3 characters")
 	private String about;
+
+	private Set<RoleDto> roles = new HashSet<>();
+
 
 	@JsonIgnore
 	public String getPassword() {
