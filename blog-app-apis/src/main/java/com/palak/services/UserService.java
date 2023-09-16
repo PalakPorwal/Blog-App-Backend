@@ -6,6 +6,8 @@ import java.util.*;
 
 public interface UserService {
 
+	UserDto registerNewUser(UserDto user);
+
 	UserDto createUser(UserDto user);
 
 	UserDto loginUser(LoginUser user);

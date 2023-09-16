@@ -5,8 +5,11 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.palak.config.AppConstants;
+import com.palak.entities.Role;
 import com.palak.entities.User;
 import com.palak.payloads.LoginUser;
 import com.palak.payloads.UserDto;
@@ -17,12 +20,19 @@ import com.palak.exceptions.*;
 
 @Service
 public class UserServiceImpl implements UserService {
+	
 
 	@Autowired
 	private UserRepo userRepo;
 
 	@Autowired
 	private ModelMapper modelMapper;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private RoleRepo roleRepo;
 
 	@Override
 	public UserDto createUser(UserDto userDto) {
@@ -110,5 +120,21 @@ public class UserServiceImpl implements UserService {
 				.orElseThrow(() -> new AlreadyExistsException("User Details not found"));
 
 		return this.userToDto(existUser);
+	}
+
+	@Override
+	public UserDto registerNewUser(UserDto userDto) {
+
+		User user=this.modelMapper.map(userDto,User.class);
+
+		//encoded the password
+		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+		
+		//roles
+		Role role=this.roleRepo.findById(AppConstants.NORMAL_USER).get();
+
+		user.getRoles().add(role);
+		User newUser=this.userRepo.save(user);
+		return this.modelMapper.map(newUser, UserDto.class);
 	}
 }
