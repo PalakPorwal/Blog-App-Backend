@@ -12,16 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.palak.entities.Category;
-import com.palak.entities.Post;
-import com.palak.entities.User;
-import com.palak.exceptions.AlreadyExistsException;
-import com.palak.exceptions.ResourceNotFoundException;
-import com.palak.payloads.PostDto;
-import com.palak.payloads.PostResponse;
-import com.palak.repositories.CategoryRepo;
-import com.palak.repositories.PostRepo;
-import com.palak.repositories.UserRepo;
+import com.palak.entities.*;
+import com.palak.exceptions.*;
+import com.palak.payloads.*;
+import com.palak.repositories.*;
 import com.palak.services.PostService;
 
 @Service
@@ -74,18 +68,22 @@ public class PostServiceImpl implements PostService {
 
 		post.setTitle(postDto.getTitle());
 		post.setContent(postDto.getContent());
-		post.setImageName(postDto.getImageName());
+
+		if (postDto.getImageName() != null)
+			post.setImageName(postDto.getImageName());
+
 		Post updatedPost = this.postRepo.save(post);
 		return this.modelMapper.map(updatedPost, PostDto.class);
 	}
 
 	@Override
 	public void deletePost(Integer postId) {
-
 		Post post = this.postRepo.findById(postId)
 				.orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
-
-		this.postRepo.delete(post);
+		System.out.println(post.getTitle());
+		System.out.println(postId);
+		postRepo.delete(post);
+		this.postRepo.deleteById(postId);
 	}
 
 	@Override

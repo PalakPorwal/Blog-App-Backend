@@ -8,7 +8,6 @@ import com.palak.payloads.PostResponse;
 public interface PostService {
 
 	// create
-
 	PostDto createPost(PostDto postDto, Integer userId, Integer categoryId);
 
 	// update
