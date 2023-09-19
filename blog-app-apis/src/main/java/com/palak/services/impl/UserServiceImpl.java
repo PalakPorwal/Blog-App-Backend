@@ -20,7 +20,6 @@ import com.palak.exceptions.*;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
 
 	@Autowired
 	private UserRepo userRepo;
@@ -46,6 +45,7 @@ public class UserServiceImpl implements UserService {
 			throw new AlreadyExistsException("User already exists with given details");
 
 		User user = this.dtoToUser(userDto);
+		user.setImage("default.png");
 		User savedUser = this.userRepo.save(user);
 		return this.userToDto(savedUser);
 	}
@@ -58,13 +58,12 @@ public class UserServiceImpl implements UserService {
 
 		User newUser = this.modelMapper.map(userDto, User.class);
 		newUser.setId(user.getId());
-		// user.setName(userDto.getName());
-		// user.setEmail(userDto.getEmail());
-		// user.setPassword(userDto.getPassword());
-		// user.setAbout(userDto.getAbout());
+
+		if (userDto.getImage() != null)
+			newUser.setImage(userDto.getImage());
+
 		User updatedUser = this.userRepo.save(newUser);
-		UserDto userDto1 = this.userToDto(updatedUser);
-		return userDto1;
+		return this.userToDto(updatedUser);
 	}
 
 	@Override
@@ -125,16 +124,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto registerNewUser(UserDto userDto) {
 
-		User user=this.modelMapper.map(userDto,User.class);
+		User user = this.modelMapper.map(userDto, User.class);
 
-		//encoded the password
+		// encoded the password
 		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-		
-		//roles
-		Role role=this.roleRepo.findById(AppConstants.NORMAL_USER).get();
+
+		// roles
+		Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
 
 		user.getRoles().add(role);
-		User newUser=this.userRepo.save(user);
+		User newUser = this.userRepo.save(user);
 		return this.modelMapper.map(newUser, UserDto.class);
 	}
 }

@@ -32,8 +32,9 @@ public class UserDto {
 	@Size(min = 3, message = "About must be more than 3 characters")
 	private String about;
 
-	private Set<RoleDto> roles = new HashSet<>();
+	private String image;
 
+	private Set<RoleDto> roles = new HashSet<>();
 
 	@JsonIgnore
 	public String getPassword() {

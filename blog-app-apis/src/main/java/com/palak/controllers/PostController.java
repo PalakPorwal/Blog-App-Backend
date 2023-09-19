@@ -40,7 +40,7 @@ public class PostController {
 	@Autowired
 	private FileService fileService;
 
-	@Value("${project.image}")
+	@Value("${project.postImage}")
 	private String path;
 
 	// create
@@ -115,8 +115,8 @@ public class PostController {
 	public ResponseEntity<PostDto> uploadPostImage(
 			@RequestParam("image") MultipartFile image,
 			@PathVariable Integer postId) throws IOException {
-		String fileName = this.fileService.uploadImage(path, image);
 		PostDto postDto = this.postService.getPostById(postId);
+		String fileName = this.fileService.uploadImage(path, image);
 		postDto.setImageName(fileName);
 		PostDto updatePost = this.postService.updatePost(postDto, postId);
 		return new ResponseEntity<PostDto>(updatePost, HttpStatus.OK);

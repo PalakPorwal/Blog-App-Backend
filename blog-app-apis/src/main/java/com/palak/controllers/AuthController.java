@@ -66,18 +66,16 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             throw new ApiException(" Invalid Username or Password  !!");
         }
-
     }
 
-//register new user api
-@PostMapping("/register")
-public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto)
-{
-    UserDto registeredUser=this.userService.registerNewUser(userDto);
-   
-    return new ResponseEntity<UserDto>(registeredUser,HttpStatus.CREATED);
-    
-}
+    // register new user api
+    @PostMapping("/register")
+    public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
+        UserDto registeredUser = this.userService.registerNewUser(userDto);
+
+        return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
+
+    }
 
     @ExceptionHandler(BadCredentialsException.class)
     public String exceptionHandler() {

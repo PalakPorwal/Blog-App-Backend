@@ -5,6 +5,7 @@ C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\pal
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\controllers\PostController.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\exceptions\ResourceNotFoundException.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\security\JwtAuthRequest.java
+C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\payloads\RoleDto.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\controllers\UserController.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\config\AppConstants.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\repositories\UserRepo.java
@@ -40,4 +41,6 @@ C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\pal
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\config\SecurityConfig.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\entities\User.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\security\JwtAuthenticationEntryPoint.java
+C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\exceptions\ApiException.java
 C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\repositories\CategoryRepo.java
+C:\VS Code\Blog Application\Blog-App-Backend\blog-app-apis\src\main\java\com\palak\repositories\RoleRepo.java
