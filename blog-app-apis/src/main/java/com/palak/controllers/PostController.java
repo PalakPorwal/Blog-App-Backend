@@ -91,8 +91,8 @@ public class PostController {
 
 	// delete post
 	@DeleteMapping("/posts/{postId}")
-	public ApiResponse deletePost(@PathVariable Integer postId) {
-		this.postService.deletePost(postId);
+	public ApiResponse deletePost(@PathVariable("postId") int postId) {
+		this.postService.deletePostById(postId);
 		return new ApiResponse("Post is successfully deleted", true);
 	}
 

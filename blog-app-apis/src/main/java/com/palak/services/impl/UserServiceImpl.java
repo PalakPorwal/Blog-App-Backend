@@ -9,13 +9,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.palak.config.AppConstants;
-import com.palak.entities.Role;
-import com.palak.entities.User;
-import com.palak.payloads.LoginUser;
-import com.palak.payloads.UserDto;
+import com.palak.entities.*;
+import com.palak.payloads.*;
 import com.palak.repositories.*;
 import com.palak.services.UserService;
-
 import com.palak.exceptions.*;
 
 @Service
@@ -45,7 +42,15 @@ public class UserServiceImpl implements UserService {
 			throw new AlreadyExistsException("User already exists with given details");
 
 		User user = this.dtoToUser(userDto);
+
+		// default user image
 		user.setImage("default.png");
+		// encoded the password
+		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+		// roles
+		Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
+		user.getRoles().add(role);
+		
 		User savedUser = this.userRepo.save(user);
 		return this.userToDto(savedUser);
 	}
@@ -56,13 +61,19 @@ public class UserServiceImpl implements UserService {
 		User user = this.userRepo.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
 
-		User newUser = this.modelMapper.map(userDto, User.class);
-		newUser.setId(user.getId());
+		if (userDto.getName() != null)
+			user.setName(userDto.getName());
+
+		if (userDto.getEmail() != null)
+			user.setEmail(userDto.getEmail());
+
+		if (userDto.getPassword() != null)
+			user.setPassword(userDto.getPassword());
 
 		if (userDto.getImage() != null)
-			newUser.setImage(userDto.getImage());
+			user.setImage(userDto.getImage());
 
-		User updatedUser = this.userRepo.save(newUser);
+		User updatedUser = this.userRepo.save(user);
 		return this.userToDto(updatedUser);
 	}
 

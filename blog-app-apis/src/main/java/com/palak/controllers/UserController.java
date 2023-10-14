@@ -26,7 +26,6 @@ import com.palak.payloads.*;
 import com.palak.services.*;
 
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users")
@@ -41,23 +40,9 @@ public class UserController {
 	@Value("${project.userImage}")
 	private String path;
 
-	// POST - Login User
-	@PostMapping("/login")
-	public ResponseEntity<UserDto> loginUserHandler(@RequestBody LoginUser user) {
-		UserDto existUser = this.userService.loginUser(user);
-		return new ResponseEntity<>(existUser, HttpStatus.OK);
-	}
-
-	// POST - CREATE USER
-	@PostMapping("/")
-	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
-		UserDto createUserDto = this.userService.createUser(userDto);
-		return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
-	}
-
 	// PUT - UPDATE USER
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto,
+	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto,
 			@PathVariable("userId") Integer uid) {
 		UserDto updatedUser = this.userService.updateUser(userDto, uid);
 		return ResponseEntity.ok(updatedUser);

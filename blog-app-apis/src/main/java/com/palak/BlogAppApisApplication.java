@@ -9,7 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.palak.config.AppConstants;
+import com.palak.entities.Category;
 import com.palak.entities.Role;
+import com.palak.repositories.CategoryRepo;
 import com.palak.repositories.RoleRepo;
 import java.util.*;
 
@@ -21,6 +23,9 @@ public class BlogAppApisApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private CategoryRepo categoryRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BlogAppApisApplication.class, args);
@@ -49,8 +54,25 @@ public class BlogAppApisApplication implements CommandLineRunner{
 
 			List<Role> result=this.roleRepo.saveAll(roles);
 
+			Category cat1 = new Category();
+			cat1.setCategoryId(1);
+			cat1.setCategoryTitle("Java");
+			cat1.setCategoryDescription("PL");
+
+			Category cat2 = new Category();
+			cat2.setCategoryId(2);
+			cat2.setCategoryTitle("Python");
+			cat2.setCategoryDescription("SL");
+
+			List<Category> cat = List.of(cat1, cat2);
+			List<Category> saveCat = this.categoryRepo.saveAll(cat);
+
 			result.forEach(r->{
 				System.out.println(r.getName());
+			});
+
+			saveCat.forEach(c -> {
+				System.out.println(c.getCategoryTitle());
 			});
 		}
 		catch(Exception e)

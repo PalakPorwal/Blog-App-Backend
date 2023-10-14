@@ -16,6 +16,7 @@ import com.palak.entities.*;
 import com.palak.exceptions.*;
 import com.palak.payloads.*;
 import com.palak.repositories.*;
+import com.palak.services.CommentService;
 import com.palak.services.PostService;
 
 @Service
@@ -32,6 +33,9 @@ public class PostServiceImpl implements PostService {
 
 	@Autowired
 	private CategoryRepo categoryRepo;
+
+	@Autowired
+	private CommentService commentService;
 
 	@Override
 	public PostDto createPost(PostDto postDto, Integer userId, Integer categoryId) {
@@ -77,13 +81,14 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public void deletePost(Integer postId) {
+	public void deletePostById(Integer postId) {
+		// It will delete all the comments
+		// this.commentService.deleteCommentByPostId(postId);
+
+		// It will delete the post
 		Post post = this.postRepo.findById(postId)
-				.orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
-		System.out.println(post.getTitle());
-		System.out.println(postId);
-		postRepo.delete(post);
-		this.postRepo.deleteById(postId);
+				.orElseThrow(() -> new ResourceNotFoundException("Post", "postId", postId));
+		this.postRepo.delete(post);
 	}
 
 	@Override

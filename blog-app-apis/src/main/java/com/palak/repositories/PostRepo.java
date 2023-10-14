@@ -6,9 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.palak.entities.Category;
-import com.palak.entities.Post;
-import com.palak.entities.User;
+import com.palak.entities.*;
 
 public interface PostRepo extends JpaRepository<Post, Integer> {
 
