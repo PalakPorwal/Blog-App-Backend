@@ -23,6 +23,8 @@ import com.palak.security.JwtAuthResponse;
 import com.palak.security.JwtTokenHelper;
 import com.palak.services.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -70,11 +72,10 @@ public class AuthController {
 
     // register new user api
     @PostMapping("/register")
-    public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
-        UserDto registeredUser = this.userService.registerNewUser(userDto);
+    public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto userDto) {
+        UserDto registeredUser = this.userService.createUser(userDto);
 
         return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
-
     }
 
     @ExceptionHandler(BadCredentialsException.class)
