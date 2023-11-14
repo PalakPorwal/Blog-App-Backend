@@ -1,6 +1,7 @@
 package com.palak.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -50,31 +51,37 @@ public class UserServiceImpl implements UserService {
 		// roles
 		Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
 		user.getRoles().add(role);
-		
+
 		User savedUser = this.userRepo.save(user);
 		return this.userToDto(savedUser);
 	}
 
 	@Override
 	public UserDto updateUser(UserDto userDto, Integer userId) {
-
+		// Checks for user exists or not
 		User user = this.userRepo.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
 
-		if (userDto.getName() != null)
-			user.setName(userDto.getName());
+		// Getting a user of the same email, if found
+		Optional<User> exist = this.userRepo.findByEmailAndIdNot(userDto.getEmail(), userId);
 
-		if (userDto.getEmail() != null)
-			user.setEmail(userDto.getEmail());
+		// If found a user with same email
+		if (exist.isPresent()) {
+			throw new AlreadyExistsException("Entered email is already in use !");
+		} else {
+			
+			if (userDto.getName() != null)
+				user.setName(userDto.getName());
 
-		if (userDto.getPassword() != null)
-			user.setPassword(userDto.getPassword());
+			if (userDto.getEmail() != null)
+				user.setEmail(userDto.getEmail());
 
-		if (userDto.getImage() != null)
-			user.setImage(userDto.getImage());
+			if (userDto.getImage() != null)
+				user.setImage(userDto.getImage());
 
-		User updatedUser = this.userRepo.save(user);
-		return this.userToDto(updatedUser);
+			User updatedUser = this.userRepo.save(user);
+			return this.userToDto(updatedUser);
+		}
 	}
 
 	@Override
@@ -102,11 +109,6 @@ public class UserServiceImpl implements UserService {
 
 	private User dtoToUser(UserDto userDto) {
 		User user = this.modelMapper.map(userDto, User.class);
-		// user.setId(userDto.getId());
-		// user.setName(userDto.getName());
-		// user.setEmail(userDto.getEmail());
-		// user.setAbout(userDto.getAbout());
-		// user.setPassword(userDto.getPassword());
 
 		return user;
 
@@ -114,11 +116,6 @@ public class UserServiceImpl implements UserService {
 
 	private UserDto userToDto(User user) {
 		UserDto userDto = this.modelMapper.map(user, UserDto.class);
-		// userDto.setId(user.getId());
-		// userDto.setName(user.getName());
-		// userDto.setEmail(user.getEmail());
-		// userDto.setAbout(user.getAbout());
-		// userDto.setPassword(user.getPassword());
 		return userDto;
 	}
 
