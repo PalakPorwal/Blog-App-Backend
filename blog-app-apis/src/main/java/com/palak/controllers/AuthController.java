@@ -44,21 +44,16 @@ public class AuthController {
     @Autowired
     private ModelMapper mapper;
 
+    // Login User
     @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> login(@RequestBody JwtAuthRequest request) {
 
         this.doAuthenticate(request.getEmail(), request.getPassword());
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-        String token = this.jwtTokenHelper.generateToken(userDetails);
-
-        JwtAuthResponse response = JwtAuthResponse.builder()
-                .token(token)
-                .user(this.mapper.map((User) userDetails, UserDto.class))
-                .build();
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return getJwtResponse(request.getEmail());
     }
 
+    // Authentication Email and Password
     private void doAuthenticate(String email, String password) {
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
@@ -70,7 +65,19 @@ public class AuthController {
         }
     }
 
-    // register new user api
+    // Getting Token By Email only
+    protected ResponseEntity<JwtAuthResponse> getJwtResponse(String email){
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        String token = this.jwtTokenHelper.generateToken(userDetails);
+
+        JwtAuthResponse response = JwtAuthResponse.builder()
+                .token(token)
+                .user(this.mapper.map((User) userDetails, UserDto.class))
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // Sign-up new User
     @PostMapping("/register")
     public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto userDto) {
         UserDto registeredUser = this.userService.createUser(userDto);

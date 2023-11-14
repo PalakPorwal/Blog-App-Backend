@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.palak.payloads.*;
+import com.palak.security.JwtAuthResponse;
 import com.palak.services.*;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,15 +38,19 @@ public class UserController {
 	@Autowired
 	private FileService fileService;
 
+	@Autowired
+	private AuthController authController;
+
 	@Value("${project.userImage}")
 	private String path;
 
 	// PUT - UPDATE USER
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto,
+	public ResponseEntity<JwtAuthResponse> updateUser(@RequestBody UserDto userDto,
 			@PathVariable("userId") Integer uid) {
 		UserDto updatedUser = this.userService.updateUser(userDto, uid);
-		return ResponseEntity.ok(updatedUser);
+		
+		return authController.getJwtResponse(updatedUser.getEmail());
 	}
 
 	// ADMIN
@@ -90,4 +95,8 @@ public class UserController {
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 		StreamUtils.copy(resource, response.getOutputStream());
 	}
+
+	// Re-Login user
+	// @PostMapping('/relogin/{userId}')
+	// public ResponseEntitity<
 }
